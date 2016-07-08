@@ -19,7 +19,7 @@ public class Files {
         File[] filesList = curDir.listFiles();
         LinkedList<File> simpleFiles = new LinkedList<>();
         for (File f : filesList) {
-            if (f.isFile() && !f.isHidden() && f.canWrite() && !f.getName().contains(".jar")) {
+            if (f.isFile() && !f.isHidden() && f.canWrite() && !f.getName().contains(".jar") && !f.getName().contains(".bat")) {
                 simpleFiles.add(f);
             }
         }
