@@ -20,6 +20,10 @@ public class Main {
             System.exit(0);
         }
 
+        System.out.print("Type an additional phrase to append to the video titles when searching: ");
+        String addendum = System.console().readLine();
+        System.out.println();
+
         // main command loop
         while (true) {
             System.out.println("Found " + files.size() + " eligible files. Available commands:");
@@ -31,11 +35,11 @@ public class Main {
             System.out.println();
             if (input.contentEquals("1")) {
                 // preview names
-                Files.previewNames(files);
+                Files.previewNames(files, addendum);
                 System.out.println();
             } else if (input.contentEquals("2")) {
                 // rename
-                Files.renameFiles(files);
+                Files.renameFiles(files, addendum);
                 System.out.println("Press enter to exit...");
                 try {
                     System.in.read();

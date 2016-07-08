@@ -94,6 +94,6 @@ public class Youtube {
      * @return The search url
      */
     private static String getSearchUrl(String title) {
-        return "https://www.youtube.com/results?search_query=" + title.replace(" ", "+");
+        return "https://www.youtube.com/results?search_query=" + title.replace("&", "").replace(" ", "+");
     }
 }
