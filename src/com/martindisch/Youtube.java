@@ -15,16 +15,17 @@ public class Youtube {
      * Returns the publishing date of the first video found by the title
      *
      * @param title The video's title
-     * @return The publishing date formatted as yy_mm_dd
+     * @return The publishing date formatted as yy_mm_dd and the video url
      */
-    public static String getPublishingDate(String title) {
-        StringBuffer page = Downloader.getHTML(getVideoUrl(title));
+    public static String[] getPublishingDate(String title) {
+        String url = getVideoUrl(title);
+        StringBuffer page = Downloader.getHTML(url);
         int startIndex = page.indexOf("Published on ") + 13;
         int endIndex = page.indexOf("</strong></div><div id=\"watch-description-text\" class=\"\">");
         String canonicalDate = page.substring(startIndex, endIndex);
         String date = formatDate(canonicalDate);
 
-        return date;
+        return new String[] {date, url};
     }
 
     /**
@@ -82,7 +83,7 @@ public class Youtube {
      */
     private static String getFirstVideoUrl(StringBuffer page) {
         int startIndex = page.indexOf("href=\"/watch?v=") + 6;
-        int endIndex = startIndex + 21;
+        int endIndex = startIndex + 20;
 
         return "https://www.youtube.com" + page.substring(startIndex, endIndex);
     }

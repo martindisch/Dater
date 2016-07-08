@@ -1,6 +1,9 @@
 package com.martindisch;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 
 /**
@@ -16,27 +19,38 @@ public class Files {
      */
     public static void previewNames(LinkedList<File> files, String addendum) {
         for (File f : files) {
-            System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName(), addendum)) + " " + f.getName());
+            System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName(), addendum))[0] + " - " + f.getName());
         }
     }
 
     /**
-     * Renames the given files
+     * Renames the given files and saves the links to a file
      *
      * @param files    The files to be renamed
      * @param addendum The phrase to append to the title
      */
     public static void renameFiles(LinkedList<File> files, String addendum) {
         int successes = 0;
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new FileWriter("date_url.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (File f : files) {
-            File newName = new File(Youtube.getPublishingDate(Files.getTitle(f.getName(), addendum)) + " " + f.getName());
+            String[] dateUrl = Youtube.getPublishingDate(Files.getTitle(f.getName(), addendum));
+            String filename = dateUrl[0] + " - " + f.getName();
+            File newName = new File(filename);
             if (f.renameTo(newName)) {
-                System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName(), addendum)) + " " + f.getName());
+                System.out.println(filename);
                 successes++;
+                pw.write(dateUrl[0] + " - " + dateUrl[1] + "\n");
             } else {
                 System.out.println("Could not rename " + f.getName());
+                pw.write("Unable to rename " + dateUrl[1] + "\n");
             }
         }
+        pw.close();
         System.out.println();
         System.out.println(successes + " files successfully renamed.");
     }
