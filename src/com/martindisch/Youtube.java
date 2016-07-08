@@ -70,6 +70,7 @@ public class Youtube {
         String searchUrl = getSearchUrl(title);
         StringBuffer page = Downloader.getHTML(searchUrl);
         String url = getFirstVideoUrl(page);
+
         return url;
     }
 
@@ -82,6 +83,7 @@ public class Youtube {
     private static String getFirstVideoUrl(StringBuffer page) {
         int startIndex = page.indexOf("href=\"/watch?v=") + 6;
         int endIndex = startIndex + 21;
+
         return "https://www.youtube.com" + page.substring(startIndex, endIndex);
     }
 
