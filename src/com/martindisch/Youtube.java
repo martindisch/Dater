@@ -15,7 +15,7 @@ public class Youtube {
      * Returns the publishing date of the first video found by the title
      *
      * @param title The video's title
-     * @return The publishing date formatted as yy_mm_dd and the video url
+     * @return The publishing date formatted as yy_mm_dd, the video url and the video's title
      */
     public static String[] getPublishingDate(String title) {
         String url = getVideoUrl(title);
@@ -25,7 +25,12 @@ public class Youtube {
         String canonicalDate = page.substring(startIndex, endIndex);
         String date = formatDate(canonicalDate);
 
-        return new String[] {date, url};
+        // get video title
+        startIndex = page.indexOf("<title>") + 7;
+        endIndex = page.indexOf("</title>");
+        String realTitle = page.substring(startIndex, endIndex).replace(" - YouTube", "");
+
+        return new String[] {date, url, realTitle};
     }
 
     /**

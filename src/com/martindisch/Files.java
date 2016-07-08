@@ -45,6 +45,8 @@ public class Files {
                 System.out.println(filename);
                 successes++;
                 pw.write(dateUrl[0] + " - " + dateUrl[1] + "\n");
+                pw.write(Files.getTitle(f.getName(), "") + "\n");
+                pw.write(dateUrl[2] + "\n\n");
             } else {
                 System.out.println("Could not rename " + f.getName());
                 pw.write("Unable to rename " + dateUrl[1] + "\n");
