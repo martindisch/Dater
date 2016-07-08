@@ -9,12 +9,43 @@ import java.util.LinkedList;
 public class Files {
 
     /**
+     * Shows a preview of the new names
+     *
+     * @param files The files to be previewed
+     */
+    public static void previewNames(LinkedList<File> files) {
+        for (File f : files) {
+            System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
+        }
+    }
+
+    /**
+     * Renames the given files
+     *
+     * @param files The files to be renamed
+     */
+    public static void renameFiles(LinkedList<File> files) {
+        int successes = 0;
+        for (File f : files) {
+            File newName = new File(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
+            if (f.renameTo(newName)) {
+                System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
+                successes++;
+            } else {
+                System.out.println("Could not rename " + f.getName());
+            }
+        }
+        System.out.println();
+        System.out.println(successes + " files successfully renamed.");
+    }
+
+    /**
      * Returns an array of files in the current directory
      * that are neither hidden nor read-only
      *
      * @return The files in the current directory
      */
-    public static LinkedList<File> listFiles() {
+    public static LinkedList<File> getFiles() {
         File curDir = new File(".");
         File[] filesList = curDir.listFiles();
         LinkedList<File> simpleFiles = new LinkedList<>();

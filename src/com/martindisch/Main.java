@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         // get files
         System.out.println();
-        LinkedList<File> files = Files.listFiles();
+        LinkedList<File> files = Files.getFiles();
         if (files.size() < 0) {
             System.out.println("No eligible files in this folder. Press enter to exit...");
             try {
@@ -31,24 +31,12 @@ public class Main {
             System.out.println();
             if (input.contentEquals("1")) {
                 // preview names
-                for (File f : files) {
-                    System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
-                }
+                Files.previewNames(files);
                 System.out.println();
             } else if (input.contentEquals("2")) {
                 // rename
-                int successes = 0;
-                for (File f : files) {
-                    File newName = new File(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
-                    if (f.renameTo(newName)) {
-                        System.out.println(Youtube.getPublishingDate(Files.getTitle(f.getName())) + " " + f.getName());
-                        successes++;
-                    } else {
-                        System.out.println("Could not rename " + f.getName());
-                    }
-                }
-                System.out.println();
-                System.out.println(successes + " files successfully renamed. Press enter to exit...");
+                Files.renameFiles(files);
+                System.out.println("Press enter to exit...");
                 try {
                     System.in.read();
                 } catch (IOException e) {
